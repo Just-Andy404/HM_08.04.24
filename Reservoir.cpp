@@ -88,6 +88,7 @@ void Reservoir::input()
     cout << "Input name: ";
     cin.getline(NewName, 255);
     SetsName(NewName);
+    delete[] NewName;
 
     cout << "Input width: ";
     cin >> width;
@@ -105,20 +106,21 @@ void Reservoir::input()
     cout << "Input type: ";
     cin.getline(type, 255);
     SetType(type);
+    delete[] type;
 }
 
 void Reservoir::add(Reservoir*& array, int& size)
 {
-    Reservoir* newArray = new Reservoir[size + 1];
-    size++;
-    for (int i = 1; i < size; ++i) {
+    Reservoir* newArray = new Reservoir[size+1];
+    for (int i = 0; i < size; ++i) {
         newArray[i].SetLength(array[i].getLength());
         newArray[i].SetWidth(array[i].getWidth());
         newArray[i].SetMaximum_depth(array[i].getMaximumDepth());
         newArray[i].SetsName(array[i].getName());
         newArray[i].SetType(array[i].getType());
-
+        newArray[i].output();
     }
+    
 
     delete[] array;
 
