@@ -47,15 +47,28 @@ int main() {
             exit(0);
         case 1:
             howMany_Items++;
-            list = new Reservoir[howMany_Items];
-            size = list->getLength();
+            if (!isInitializer) 
+            {
+                list = new Reservoir[howMany_Items];
+            }
+            for (int i = howMany_Items; i == howMany_Items; i++)
+            {
+                list[i].input();
+                cout << "================================\n";
+            }
+                //list->add(list, howMany_Items);
+            isInitializer = true;
+            /*size = list->getLength();
             list->input();
             cout << "================================\n";
-            isInitializer = true;
-            list->add(list, howMany_Items);
+            if (isInitializer)
+            {
+                list->add(list, howMany_Items);
+            }
+            isInitializer = true;*/
             break;
         case 2:
-            for (int i = 0; i < howMany_Items; i++)
+            for (int i = 1; i <= howMany_Items; i++)
             {
                 list[i].output();
                 cout << "================================\n";
