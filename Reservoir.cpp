@@ -3,7 +3,7 @@
 #include <iostream>
 using namespace std;
 
-Reservoir::Reservoir() : width(0), length(0), maximum_depth(0) {}
+Reservoir::Reservoir() : sName(nullptr), type(nullptr), width(0), length(0), maximum_depth(0) {}
 
 Reservoir::Reservoir(char* userName, int userWidth, int userLength, int userMaximum_depth)
     : width(userWidth), length(userLength), maximum_depth(userMaximum_depth) {
@@ -80,42 +80,49 @@ void Reservoir::output()
 
 void Reservoir::input()
 {
+    int width, length, maximum_depth;
+    char* NewName = new char[255];
+    char* type = new char[255];
+
     cin.ignore();
     cout << "Input name: ";
-    cin.getline(this->sName, 255);
+    cin.getline(NewName, 255);
+    SetsName(NewName);
+
     cout << "Input width: ";
-    cin >> this->width;
+    cin >> width;
+    SetWidth(width);
+
     cout << "Input length: ";
-    cin >> this->length;
+    cin >> length;
+    SetLength(length);
+
     cout << "Input maximum depth: ";
-    cin >> this->maximum_depth;
+    cin >> maximum_depth;
+    SetMaximum_depth(maximum_depth);
+
+    cin.ignore();
     cout << "Input type: ";
-    cin.getline(this->type, 255);
+    cin.getline(type, 255);
+    SetType(type);
 }
 
-Reservoir Reservoir::add(Reservoir*& array, int& size, Reservoir newElement)
+void Reservoir::add(Reservoir*& array, int& size)
 {
     Reservoir* newArray = new Reservoir[size + 1];
+    size++;
+    for (int i = 1; i < size; ++i) {
+        newArray[i].SetLength(array[i].getLength());
+        newArray[i].SetWidth(array[i].getWidth());
+        newArray[i].SetMaximum_depth(array[i].getMaximumDepth());
+        newArray[i].SetsName(array[i].getName());
+        newArray[i].SetType(array[i].getType());
 
-    for (int i = 0; i < size; ++i) {
-        newArray[i] = array[i];
     }
-
-    newArray[size] = newElement;
 
     delete[] array;
 
-    ++size;
-
-    return *newArray;
+    array = newArray;
+    
 }
 
-char Reservoir::getName()
-{
-    return *sName;
-}
-
-char Reservoir::getType()
-{
-    return *type;
-}
