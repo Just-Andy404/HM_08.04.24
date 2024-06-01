@@ -42,16 +42,17 @@ int Reservoir::water_surface_area()
 
 bool Reservoir::check_if_the_type_of_water(const Reservoir& other)
 {
-    if (this->type == other.type)
-    {
-        return true;
+    for (int i = 0; i < strlen(other.type) || i < strlen(this->type); ++i) {
+        if (this->type[i] != other.type[i]) {
+            return false; 
+        }
     }
-    return false;
+    return true;
 }
 
 bool Reservoir::ater_bodies_belong_to_the_same_type(Reservoir& other)
 {
-    if (this->type == other.type)
+    if (this->check_if_the_type_of_water(other))
     {
         if (this->water_surface_area() == other.water_surface_area()) {
             cout << this->sName << " and " << other.sName << " are equal" << endl;
@@ -69,6 +70,7 @@ bool Reservoir::ater_bodies_belong_to_the_same_type(Reservoir& other)
 
 void Reservoir::output()
 {
+    
     cout << "Name: " << this->sName << endl;
     cout << "Width: " << this->width << endl;
     cout << "Length: " << this->length << endl;
@@ -109,22 +111,18 @@ void Reservoir::input()
     delete[] type;
 }
 
-void Reservoir::add(Reservoir*& array, int& size)
-{
-    Reservoir* newArray = new Reservoir[size+1];
-    for (int i = 0; i < size; ++i) {
-        newArray[i].SetLength(array[i].getLength());
-        newArray[i].SetWidth(array[i].getWidth());
-        newArray[i].SetMaximum_depth(array[i].getMaximumDepth());
-        newArray[i].SetsName(array[i].getName());
-        newArray[i].SetType(array[i].getType());
-        newArray[i].output();
-    }
-    
 
-    delete[] array;
+void Reservoir::remove(Reservoir*& array, int index, int& size) {
+    Reservoir* newArray = new Reservoir[size - 1];
+    for (int i = 0, j = 0; i < size; i++) {
+        if (i != index) {
+            newArray[j] = array[i]; 
+            j++;
+        }
+    }
 
     array = newArray;
-    
 }
+
+
 
